@@ -1,0 +1,50 @@
+{% extends "base/base.html" %}
+
+{% load humanize %}
+
+{% block title %}{% endblock %}
+
+{% block head_script %}
+
+{% endblock %}
+
+{% block content %}
+
+<form class="mt-2" id="search-form" action="" method="GET">
+  <div>
+    <label class="label mr-4">年月</label>
+    {{ search_form.year }}
+    {{ search_form.month }}
+  </div>
+    <button class="btn btn-info ml-4" type="submit">検索</button>
+</form>
+<table class="ui celled table">
+  <thead>
+    <tr>
+      <th>開始日時</th>
+      <th>終了日時</th>
+      <th>残業代</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for model in object_list %}
+    <tr>
+      <td>{{ model.start_date }}</td>
+      <td>{{ model.end_date }}</td>
+      <td>{{ model.overtime_wage|intcomma }}円</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="2">{{ sum_time }}分</td>
+      <td>{{ sum_wage|intcomma }}円</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

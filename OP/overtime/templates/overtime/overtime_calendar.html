@@ -1,0 +1,108 @@
+{% extends "base/base.html" %}
+
+{% load humanize %}
+{% load tags %}
+
+{% block title %}{% endblock %}
+
+{% block head_script %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            fixedWeekCount: false,
+            showNonCurrentDates: false,
+            dayCellContent: function (e) {
+              e.dayNumberText = e.dayNumberText.replace('日', '');
+            },
+            headerToolbar: {
+              left: "title",
+              center: "",
+              right: "",
+            },
+            locale: "ja",
+            events: {{ event_date|safe }},
+            initialDate: new Date({{ year }}, {{ month }}, 1)
+        });
+
+        calendar.render();
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+<form class="ui container huge form" id="search-form" action="" method="GET">
+  <div>
+    <label class="label mr-4">年月</label>
+    {{ search_form.year }}
+    {{ search_form.month }}
+  </div>
+    <button class="ui huge button" type="submit">検索</button>
+</form>
+
+<div id="calendar"></div>
+
+<table class="ui table" border="1" style="border-collapse: collapse;width:100%;table-layout:fixed;">
+  <thead>
+    <tr>
+      <th class="center aligned" style="border-right: none;">開始日時</th>
+      <th style="border-right: none;border-left: none;"></th>
+      <th class="center aligned" style="border-left: none;">終了日時</th>
+      <th class="center aligned">残業時間</th>
+      <th class="center aligned">残業代</th>
+      <th class="center aligned">休憩時間</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for model in object_list %}
+    <tr>
+      <td class="center aligned" style="border-right: none;">{{ model.start_date|date:"m/d H:i" }} </td>
+      <td class="center aligned" style="border-right: none;border-left: none;">~</td>
+      <td class="center aligned" style="border-left: none;">{{ model.end_date|date:"H:i" }}</td>
+      <td class="right aligned">{% minute_to_hour model.overtime_minute %}時間{% minute_to_minute model.overtime_minute %}分</td>
+      <td class="right aligned">{{ model.overtime_wage|intcomma }}円</td>
+      <td class="right aligned">{{ model.break_time }}分</td>
+      <td class="center aligned"><button class="ui negative button" onclick="location.href='{% url 'overtime:overtime_delete' model.pk %}'">削除</button></td>
+    </tr>
+    {% endfor %}
+    <tr>
+      {% if sum_minute or sum_hour %}
+      <td style="border-right: none;"></td>
+      <td style="border-right: none;border-left: none;"></td>
+      <td style="border-left: none;"></td>
+      <td class="right aligned">{{ sum_hour }}時間{{ sum_minute }}分</td>
+      {% else %}
+
+      {% endif %}
+
+      {% if sum_wage %}
+      <td class="right aligned">{{ sum_wage|intcomma }}円</td>
+      {% else %}
+
+      {% endif %}
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+{% endblock %}
+
+{% block script %}
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+
+{% endblock %}

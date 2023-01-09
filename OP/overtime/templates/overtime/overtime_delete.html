@@ -1,0 +1,25 @@
+{% extends "base/base.html" %}
+
+{% load humanize %}
+
+{% block title %}{% endblock %}
+
+{% block head_script %}
+
+{% endblock %}
+
+{% block content %}
+
+<form action="" method="POST" class="ui massive form">
+  {% csrf_token %}
+  <p>データを削除しますか?</p>
+  <button class="ui huge negative button" type="submit">削除</button>
+</form>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

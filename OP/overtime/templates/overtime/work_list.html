@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+
+{% load humanize %}
+
+{% block title %}{% endblock %}
+
+{% block head_script %}
+
+{% endblock %}
+
+{% block content %}
+
+<table class="ui celled table">
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>時給</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for model in object_list %}
+    <tr>
+      <td>{{ model.name }}</td>
+      <td>{{ model.hour_wage }}</td>
+      <td><button class="ui huge button" onclick="location.href='{% url 'overtime:work_update' model.pk %}'">更新</button></td>
+      <td><button class="ui huge button" onclick="location.href='{% url 'overtime:work_delete' model.pk %}'">削除</button></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

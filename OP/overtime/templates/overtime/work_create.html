@@ -1,0 +1,26 @@
+{% extends "base/base.html" %}
+
+{% load humanize %}
+
+{% block title %}{% endblock %}
+
+{% block head_script %}
+
+{% endblock %}
+
+{% block content %}
+<div class="ui container">
+    <form action="" method="POST" class="ui massive form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="ui huge button" type="submit">登録</button>
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

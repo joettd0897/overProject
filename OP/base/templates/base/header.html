@@ -1,0 +1,12 @@
+<div class="ui massive menu">
+  {% if user.is_anonymous %}
+  <a class="item" href="{% url 'account:login' %}">ログイン</a>
+  {% else %}
+  <a class="item" href="{% url 'overtime:top' %}">トップ</a>
+  <a class="item" href="{% url 'overtime:work_register' %}">仕事登録</a>
+  <a class="item" href="{% url 'overtime:overtime_register' %}">残業登録</a>
+  <a class="item" href="{% url 'overtime:work_list' %}">仕事リスト</a>
+  <a class="item" href="{% url 'overtime:overtime_calendar' %}">残業カレンダー</a>
+  <a class="item" href="{% url 'account:logout' %}">ログアウト</a>
+  {% endif %}
+</div>
