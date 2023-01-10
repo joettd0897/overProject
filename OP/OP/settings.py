@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", ".pythonanywhere.com", ".pythonanywhere.com"]
+ALLOWED_HOSTS = ["localhost", ".pythonanywhere.com", "joettd0897.pythonanywhere.com"]
 
 
 # Application definition
@@ -144,7 +144,7 @@ SECRET_KEY = get_random_secret_key()
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS =[
-   os.path.join(BASE_DIR, '/static'),
+   os.path.join(BASE_DIR, 'static'),
 ]
 
 try:
