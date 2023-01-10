@@ -143,9 +143,9 @@ SESSION_COOKIE_SECURE = True
 SECRET_KEY = get_random_secret_key()
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS =[
-   os.path.join(BASE_DIR, 'static'),
-]
+#STATICFILES_DIRS =[
+#   os.path.join(BASE_DIR, 'static'),
+#]
 
 try:
     from .local_setting import *
