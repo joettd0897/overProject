@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
@@ -142,7 +142,12 @@ SESSION_COOKIE_SECURE = True
 
 SECRET_KEY = get_random_secret_key()
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS =[
+   os.path.join(BASE_DIR, '/static'),
+]
+
 try:
-    from .local_settings import *
+    from .local_setting import *
 except:
     pass
