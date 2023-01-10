@@ -84,23 +84,26 @@ class OvertimeCalendarView(LoginRequiredMixin,ListView):
     model = OverTimeModel
     def get_queryset(self):
         #クエリをリクエストユーザーで絞り込み
-        queryset = OverTimeModel.objects.filter(user=self.request.user)
+        queryset = OverTimeModel.objects.filter(user=self.request.user.pk)
         #formを取得しインスタンス変数化
         self.form = form = OvertimeCalendarForm(self.request.GET or None)
 
         if form.is_valid():
             year = form.cleaned_data.get("year")
             if year:
-                queryset = OverTimeModel.objects.filter(start_date__year=year)
+                queryset = OverTimeModel.objects.filter(start_date__year=year,
+                                                        user=self.request.user)
 
             month = form.cleaned_data.get("month")
             if month:
                 queryset = OverTimeModel.objects.filter(start_date__month=month,
-                                                        start_date__year=year).order_by("start_date")
+                                                        start_date__year=year,
+                                                        user=self.request.user).order_by("start_date")
         else:
             now = timezone.now()
             queryset = OverTimeModel.objects.filter(start_date__month=now.month,
-                                                    start_date__year=now.year).order_by("start_date")
+                                                    start_date__year=now.year,
+                                                    user=self.request.user).order_by("start_date")
 
         self.queryset = queryset
         return queryset
@@ -141,6 +144,9 @@ class WorkListView(LoginRequiredMixin, ListView):
     model = WorkModel
     template_name = "overtime/work_list.html"
     context_object_name = "object_list"
+    def get_queryset(self):
+        queryset = WorkModel.objects.filter(user=self.request.user.pk)
+        return queryset
 
 class WorkUpdateView(LoginRequiredMixin, UpdateView):
     model = WorkModel
