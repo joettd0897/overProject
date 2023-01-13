@@ -12,7 +12,12 @@
 <div class="ui container">
     <form action="" method="POST" class="ui massive form">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div>
+            <p>{{ form.name.label_tag }}{{ form.name }}</p>
+        </div>
+        <div>
+            <p>{{ form.hour_wage.label_tag }}{{ form.hour_wage }}円</p>
+        </div>
         <button class="ui huge button" type="submit">登録</button>
     </form>
 </div>

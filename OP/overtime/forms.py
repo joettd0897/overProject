@@ -24,7 +24,7 @@ class OverTimeCreateForm(forms.ModelForm):
         start = cleaned_data.get("start_date")
         end = cleaned_data.get("end_date")
         if end < start:
-            raise forms.ValidationError('時間がおかしいです。')
+            raise forms.ValidationError('時間がおかしいです。', code="time_is_wrong")
     class Meta:
         model = OverTimeModel
         fields = [

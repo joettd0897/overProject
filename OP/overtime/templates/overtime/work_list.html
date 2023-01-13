@@ -13,17 +13,19 @@
 <table class="ui celled table">
   <thead>
     <tr>
-      <th>名前</th>
-      <th>時給</th>
+      <th class="center aligned">名前</th>
+      <th class="center aligned">時給</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     {% for model in object_list %}
     <tr>
-      <td>{{ model.name }}</td>
-      <td>{{ model.hour_wage }}</td>
-      <td><button class="ui huge button" onclick="location.href='{% url 'overtime:work_update' model.pk %}'">更新</button></td>
-      <td><button class="ui huge button" onclick="location.href='{% url 'overtime:work_delete' model.pk %}'">削除</button></td>
+      <td class="center aligned">{{ model.name }}</td>
+      <td class="center aligned">{{ model.hour_wage|intcomma }}円</td>
+      <td class="center aligned" width="15%"><button class="ui huge button" onclick="location.href='{% url 'overtime:work_update' model.pk %}'">更新</button></td>
+      <td class="center aligned" width="15%"><button class="ui huge negative button" onclick="location.href='{% url 'overtime:work_delete' model.pk %}'">削除</button></td>
     </tr>
     {% endfor %}
   </tbody>
