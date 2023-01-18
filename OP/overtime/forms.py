@@ -1,6 +1,7 @@
 from django import forms
 from django.utils import timezone
 from .models import *
+import datetime as dt
 
 class WorkCreateForm(forms.ModelForm):
     class Meta:
@@ -11,13 +12,17 @@ class WorkCreateForm(forms.ModelForm):
         ]
 
 class OverTimeCreateForm(forms.ModelForm):
+    now = dt.datetime.now()
+    now_str = now.strftime('%Y%m%d%H%M')
+    now_dt = dt.datetime.strptime(now_str, '%Y%m%d%H%M')
     start_date = forms.SplitDateTimeField(label="開始時間",
-                                          widget=forms.SplitDateTimeWidget(date_attrs={"type": "date",
-                                                                                       "placeholder": "年/月/日"},
-                                                                           time_attrs={"type": "time"}))
+                                          widget=forms.SplitDateTimeWidget(date_attrs={"type": "date",},
+                                                                           time_attrs={"type": "time"}),
+                                          initial=now_dt)
     end_date = forms.SplitDateTimeField(label="終了時間",
                                         widget=forms.SplitDateTimeWidget(date_attrs={"type": "date"},
-                                                                         time_attrs={"type": "time"}))
+                                                                         time_attrs={"type": "time"}),
+                                        initial=now_dt)
     def __init__(self, *args, **kwargs):
         super(OverTimeCreateForm, self).__init__(*args, **kwargs)
     def clean(self):
