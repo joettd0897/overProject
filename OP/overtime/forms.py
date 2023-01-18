@@ -12,7 +12,7 @@ class WorkCreateForm(forms.ModelForm):
 
 class OverTimeCreateForm(forms.ModelForm):
     start_date = forms.SplitDateTimeField(label="開始時間",
-                                          widget=forms.SplitDateTimeWidget(date_attrs={"type": "date"},
+                                          widget=forms.SplitDateTimeWidget(date_attrs={"type": "date",},
                                                                            time_attrs={"type": "time"}))
     end_date = forms.SplitDateTimeField(label="終了時間",
                                         widget=forms.SplitDateTimeWidget(date_attrs={"type": "date"},
@@ -25,6 +25,11 @@ class OverTimeCreateForm(forms.ModelForm):
         end = cleaned_data.get("end_date")
         if end < start:
             raise forms.ValidationError('時間がおかしいです。', code="time_is_wrong")
+
+        break_time = cleaned_data.get("break_time")
+        overtime = (end - start).seconds // 60
+        if break_time >= overtime:
+            raise forms.ValidationError("休憩時間がおかしいです。", code="break_is_wrong")
     class Meta:
         model = OverTimeModel
         fields = [
