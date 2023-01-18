@@ -12,7 +12,8 @@ class WorkCreateForm(forms.ModelForm):
 
 class OverTimeCreateForm(forms.ModelForm):
     start_date = forms.SplitDateTimeField(label="開始時間",
-                                          widget=forms.SplitDateTimeWidget(date_attrs={"type": "date",},
+                                          widget=forms.SplitDateTimeWidget(date_attrs={"type": "date",
+                                                                                       "placeholder": "年/月/日"},
                                                                            time_attrs={"type": "time"}))
     end_date = forms.SplitDateTimeField(label="終了時間",
                                         widget=forms.SplitDateTimeWidget(date_attrs={"type": "date"},
